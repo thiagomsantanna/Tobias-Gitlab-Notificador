@@ -4,7 +4,8 @@
   "description": "using webhooks to notify when a new issue is on Homologation",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "start": "node ."
   },
   "author": "thiagomsantanna",
   "license": "ISC",
