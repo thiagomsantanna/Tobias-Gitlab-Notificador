@@ -1,0 +1,14 @@
+{
+  "name": "apigitlabnotifier",
+  "version": "1.0.0",
+  "description": "using webhooks to notify when a new issue is on Homologation",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "thiagomsantanna",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}
