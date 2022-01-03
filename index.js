@@ -9,6 +9,7 @@ app.get('/jooj', (req, res) => {
 app.get('/', (req, res) => {
     //res.send('fodase');
     res.send(`${req.body}`);
+    console.log(req.body);
 })
 
 app.listen(port, () => {
