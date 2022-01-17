@@ -7,9 +7,11 @@ app.get('/jooj', (req, res) => {
 })
 
 app.post('/testgitlob', (req, res) => {
-    res.send(`${JSON.stringify(req)}`);
+    res.send(`${req}`);
+    console.log(req);
     res.send('-------------------');
-    res.send(`${JSON.stringify(req.body)}`);
+    res.send(`${req.body}`);
+    console.log(req.body);
     res.send('-------------------');
     res.send(`${res.body}`);
     res.send(`${res}`);
