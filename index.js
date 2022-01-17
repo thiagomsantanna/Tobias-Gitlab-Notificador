@@ -20,6 +20,7 @@ app.post('/testgitlob', (req, res) => {
     var issueTitle = body.object_attributes.title;
 
     res.send(`Issue ID: ${issueID} - Issue Title: ${issueTitle}`);
+    console.log(`Issue ID: ${issueID} - Issue Title: ${issueTitle}`);
     // console.log(req);
     // res.send('-------------------');
     // res.send(req.body);
