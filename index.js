@@ -8,6 +8,7 @@ app.get('/jooj', (req, res) => {
 
 app.get('/', (req, res) => {
     //res.send('fodase');
+    body.sexo = 'chronic';
     res.send(`${req.body}`);
     console.log(req.body);
 })
