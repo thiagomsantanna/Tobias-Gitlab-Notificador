@@ -7,14 +7,14 @@ app.get('/jooj', (req, res) => {
 })
 
 app.post('/testgitlob', (req, res) => {
-    res.send(`${req}`);
+    res.send(req);
     console.log(req);
     res.send('-------------------');
-    res.send(`${req.body}`);
+    res.send(req.body);
     console.log(req.body);
     res.send('-------------------');
-    res.send(`${res.body}`);
-    res.send(`${res}`);
+    //res.send(`${res.body}`);
+    //res.send(`${res}`);
 })
 
 app.get('/', (req, res) => {
