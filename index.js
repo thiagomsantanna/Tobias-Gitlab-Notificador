@@ -7,9 +7,9 @@ app.get('/jooj', (req, res) => {
 })
 
 app.post('/testgitlob', (req, res) => {
-    res.send(`${req}`);
+    res.send(`${JSON.stringify(req)}`);
     res.send('-------------------');
-    res.send(`${req.body}`);
+    res.send(`${JSON.stringify(req.body)}`);
     res.send('-------------------');
     res.send(`${res.body}`);
     res.send(`${res}`);
