@@ -6,9 +6,12 @@ app.get('/jooj', (req, res) => {
     res.sendStatus(200);
 })
 
+app.post('/testgitlob', (req, res) => {
+    res.send(`<p>${res}</p>`);
+})
+
 app.get('/', (req, res) => {
     //res.send('fodase');
-    body.sexo = 'chronic';
     res.send(`${req.body}`);
     console.log(req.body);
 })
