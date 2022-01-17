@@ -10,7 +10,8 @@ app.post('/testgitlob', (req, res) => {
     console.log(req.body);
     console.log('-------------------');
     console.log('-------------------');
-    console.log(res.body);
+    res.send(`${res.body}`);
+    res.send(`${res}`);
 })
 
 app.get('/', (req, res) => {
