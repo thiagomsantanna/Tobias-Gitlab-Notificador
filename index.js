@@ -7,10 +7,10 @@ app.get('/jooj', (req, res) => {
 })
 
 app.post('/testgitlob', (req, res) => {
-    console.log(req);
+    console.log(req).body;
     console.log('-------------------');
     console.log('-------------------');
-    console.log(res);
+    console.log(res.body);
 })
 
 app.get('/', (req, res) => {
