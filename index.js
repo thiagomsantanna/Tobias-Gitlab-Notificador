@@ -1,10 +1,18 @@
 const expss = require('express');
+const bodyParser = require("body-parser");
+const router = expss.Router();
 const app = expss();
 const port = process.env.PORT || 3000;
+
+app.use("/",router);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.get('/jooj', (req, res) => {
     res.sendStatus(200);
 })
+
+
 
 app.post('/testgitlob', (req, res) => {
     var body = req.body;
