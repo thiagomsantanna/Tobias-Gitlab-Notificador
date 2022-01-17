@@ -7,7 +7,11 @@ app.get('/jooj', (req, res) => {
 })
 
 app.post('/testgitlob', (req, res) => {
-    res.status(200).send(req.body);
+    var body = req.body;
+    var issueID = body.object_attributes.id;
+    var issueTitle = body.object_attributes.title;
+
+    res.send(`Issue ID: ${issueID} - Issue Title: ${issueTitle}`);
     // console.log(req);
     // res.send('-------------------');
     // res.send(req.body);
