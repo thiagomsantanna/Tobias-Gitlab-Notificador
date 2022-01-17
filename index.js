@@ -13,6 +13,6 @@ app.get('/', (req, res) => {
     console.log(req.body);
 })
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
     console.log(`Server is running on port ${port}`);
 })
