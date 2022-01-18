@@ -8,19 +8,19 @@ app.use("/",router);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+
 app.get('/jooj', (req, res) => {
     res.sendStatus(200);
 })
-
-
 
 app.post('/testgitlob', (req, res) => {
     var body = req.body;
     var issueID = body.object_attributes.id;
     var issueTitle = body.object_attributes.title;
 
-    res.send(`Issue ID: ${issueID} - Issue Title: ${issueTitle}`);
+    res.send(`Issue ID: ${issueID} - Issue Title: ${issueTitle} - ${body.object_attributes.labels} \n\n ${body}`);
     console.log(`Issue ID: ${issueID} - Issue Title: ${issueTitle}`);
+    console.log(`${body}`);
     // console.log(req);
     // res.send('-------------------');
     // res.send(req.body);
