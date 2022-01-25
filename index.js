@@ -49,7 +49,7 @@ app.post('/gitlob', (req, res) => {
 
                 issuesOnHomolog ? await discord.notifyNewIssueToTest(_issue) : console.log(`Vish, trupicaram com essa tarefa aq hein -> ${_issue.id}`);
 
-            }, 3000);//600000
+            }, 480000);//600000
         }
     }
 
