@@ -1,0 +1,4 @@
+node_modules
+.env
+issue-test.json
+ngrok.exe

@@ -2,6 +2,9 @@ const expss = require('express');
 const bodyParser = require("body-parser");
 const router = expss.Router();
 const app = expss();
+const gitlab = require('./gitlabAPI_Consumer.js');
+const discord = require('./discordNotifier.js');
+
 const port = process.env.PORT || 3000;
 
 app.use("/",router);
@@ -9,33 +12,47 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
-app.get('/jooj', (req, res) => {
-    res.sendStatus(200);
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 })
 
-app.post('/testgitlob', (req, res) => {
-    var body = req.body;
-    var issueID = body.object_attributes.id;
-    var issueTitle = body.object_attributes.title;
-
-    res.send(`Issue ID: ${issueID} - Issue Title: ${issueTitle} - ${body.object_attributes.labels} \n\n ${body}`);
-    console.log(`Issue ID: ${issueID} - Issue Title: ${issueTitle}`);
-    console.dir(`${JSON.stringify(body)}`);
-    // console.log(req);
-    // res.send('-------------------');
-    // res.send(req.body);
-    // console.log(req.body);
-    // res.send('-------------------');
-    //res.send(`${res.body}`);
-    //res.send(`${res}`);
-})
 
 app.get('/', (req, res) => {
-    //res.send('fodase');
+
     res.send(`${req.body}`);
     console.log(req.body);
 })
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+
+app.post('/gitlob', (req, res) => {
+
+    const body = req.body;
+
+    let _issue = {
+        id: body.object_attributes.iid,
+        title: body.object_attributes.title,
+        url: body.object_attributes.url
+    }
+
+    let labelChanges = body.changes.labels;
+
+    if (labelChanges) {
+    
+        let crrt = labelChanges.current;
+
+        if (crrt.some(label => label.title == 'Homologation')) {
+
+            setTimeout(async () => {
+                
+                let issuesOnHomolog = await gitlab.getHomologIssuesOnBoard();
+                issuesOnHomolog = issuesOnHomolog.find(issue => issue.iid == _issue.id);
+
+                issuesOnHomolog ? await discord.notifyNewIssueToTest(_issue) : console.log(`Vish, trupicaram com essa tarefa aq hein -> ${_issue.id}`);
+
+            }, 3000);//600000
+        }
+    }
+
+    res.sendStatus(200);
+
 })
