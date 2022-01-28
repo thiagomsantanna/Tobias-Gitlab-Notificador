@@ -36,6 +36,6 @@ async function notifyNewIssueToTest(issue) {
     console.log(`Notificado -> ${issue.id}`);
 };
 
-//notifyNewIssueToTest({ id: 1, title: "Teste", url: "https://gitlab.com/api/v4/projects/30462537/issues/1" });
+
 
 module.exports = { notifyNewIssueToTest };

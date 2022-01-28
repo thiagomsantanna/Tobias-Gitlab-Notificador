@@ -1,5 +1,5 @@
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
-
+require('dotenv').config();
 
 
 async function getHomologIssuesOnBoard() {
@@ -14,7 +14,5 @@ async function getHomologIssuesOnBoard() {
 
     return issuesOnHomolog;
 };
-
-
 
 module.exports = { getHomologIssuesOnBoard };
