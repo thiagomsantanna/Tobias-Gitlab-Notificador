@@ -40,7 +40,7 @@ app.post('/gitlob', (req, res) => {
     
         let crrt = labelChanges.current;
 
-        if (crrt.some(label => label.title == 'Homologation')) {
+        if (crrt.some(label => label.title == process.env.LABEL_HML_CONSIG)) {
 
             setTimeout(async () => {
                 

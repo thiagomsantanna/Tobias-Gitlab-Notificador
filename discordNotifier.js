@@ -27,7 +27,7 @@ async function notifyNewIssueToTest(issue) {
 
     const _body = buildEmbedMessage(issue);
 
-    await fetch('https://discord.com/api/webhooks/935503356678508614/BT2N-7bSh_gwODIHcSD5ZHf49F9s7kFK2uXKBlBNpVtAqQX0RC8Uq9Xnqte3tEr-fQWY', {
+    await fetch(process.env.DSWEBHOOK_CONSIG, {
         method: 'POST',
         body: _body,
         headers: { 'Content-Type': 'application/json' }
