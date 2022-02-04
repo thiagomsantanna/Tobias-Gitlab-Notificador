@@ -14,7 +14,7 @@ function buildEmbedMessage(issue) {
               name: "Homologation"
             },
             thumbnail: {
-              url: "./assets/sapo.gif"
+              url: "https://github.com/thiagomsantanna/apiGitLabNotifier/blob/5ceb342a0679fec4cab396b62e55d41f80fda406/assets/sapo.gif"
             }
         }]
     };
