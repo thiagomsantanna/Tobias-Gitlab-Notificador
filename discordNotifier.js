@@ -14,7 +14,7 @@ function buildEmbedMessage(issue) {
               name: "Homologation"
             },
             thumbnail: {
-              url: "https://raw.githubusercontent.com/thiagomsantanna/gitlab-issues-notifications/master/imgs/imgNotific.png"
+              url: "./assets/sapo.gif"
             }
         }]
     };
