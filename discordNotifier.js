@@ -18,7 +18,6 @@ function buildEmbedMessage(issue) {
             }
         }]
     };
-//./assets/sapo.gif
     return JSON.stringify(embedMessage);
 };
 

@@ -37,11 +37,12 @@ app.post('/gitlob', (req, res) => {
     let labelChanges = body.changes.labels;
 
     if (labelChanges) {
-    
-        let crrt = labelChanges.current;
+        
+        let previous = labelChanges.previous;
+        let current = labelChanges.current;
 
-        if (crrt.some(label => label.title == process.env.LABEL_HML_CONSIG)) {
-
+        if(current.some(label => label.title == process.env.LABEL_HML_CONSIG) && !previous.some(label => label.title == process.env.LABEL_HML_CONSIG)) {
+           
             setTimeout(async () => {
                 
                 let issuesOnHomolog = await gitlab.getHomologIssuesOnBoard();
