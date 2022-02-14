@@ -11,7 +11,7 @@ function buildEmbedMessage(issue) {
             description: issue.title,
             url: issue.url,
             author: {
-              name: "Homologation"
+              name: "Movida para Homologation"
             },
             thumbnail: {
               url: "https://raw.githubusercontent.com/thiagomsantanna/gitlab-issues-notifications/master/imgs/sapo.gif"
