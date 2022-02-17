@@ -1,6 +1,7 @@
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 require('dotenv').config();
 
+
 function buildEmbedMessage(issue) {
     
     const embedMessage = 
@@ -35,6 +36,23 @@ async function notifyNewIssueToTest(issue) {
     console.log(`Notificado -> ${issue.id}`);
 };
 
+async function notifyNewMerge(issue, member) {
+
+    let _body = buildEmbedMessage(issue);
+    _body = JSON.parse(_body);
+    _body.embeds[0].author.name = 'Movida para merge-request';
+    _body.embeds[0].color = 7876940;
+    _body.embeds[0].thumbnail.url = member.avatar;
+    _body = JSON.stringify(_body);
+
+    await fetch(process.env.WEBHOOK_MERGE, {
+        method: 'POST',
+        body: _body,
+        headers: { 'Content-Type': 'application/json' }
+    });
+
+    console.log(`Notificado -> ${issue.id}`);
+};
 
 
-module.exports = { notifyNewIssueToTest };
+module.exports = { notifyNewIssueToTest, notifyNewMerge };

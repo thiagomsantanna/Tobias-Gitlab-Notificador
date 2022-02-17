@@ -1,6 +1,7 @@
 node_modules
 .env
 issue-test.json
+mergeExample.json
 test-alreadyon-homolog.yml
 test-only-homolog.json
 ngrok.exe

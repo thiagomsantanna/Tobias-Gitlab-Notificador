@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 })
 
 
-app.post('/gitlob', (req, res) => {
+app.post('/gitlob/hml', (req, res) => {
 
     const body = req.body;
 
@@ -57,3 +57,45 @@ app.post('/gitlob', (req, res) => {
     res.sendStatus(200);
 
 })
+
+app.post('/gitlob/merges', (req, res) => {
+
+    const body = req.body;
+
+    let _issueMerge = {
+        id: body.object_attributes.iid,
+        title: body.object_attributes.title,
+        url: body.object_attributes.url
+    };
+
+    let _member = {
+        name: body.user.name,
+        avatar: body.user.avatar_url
+    };
+
+    let labelChanges = body.changes.labels;
+
+    
+    if (labelChanges) {
+        
+        let previous = labelChanges.previous;
+        let current = labelChanges.current;
+
+        if (current.some(label => label.title == 'merge-request') && !previous.some(label => label.title == 'merge-request')) {
+
+            setTimeout(async () => {
+
+                let issuesOnMerge = await gitlab.getIssuesByLabel('merge-request');
+                issuesOnMerge = issuesOnMerge.find(issue => issue.iid == _issueMerge.id);
+                
+                let mergeRes = await gitlab.createMergeRequest(_issueMerge);
+
+                issuesOnMerge ? await discord.notifyNewMerge(_issueMerge, _member) : console.log(`Vish, trupicaram com essa tarefa aq hein -> ${_issue.id}`);
+                mergeRes.state == 'opened'
+    
+            }, 480000);//600000 - 
+        }
+    }
+
+    res.sendStatus(200);
+});
