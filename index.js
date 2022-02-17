@@ -81,11 +81,11 @@ app.post('/gitlob/merges', (req, res) => {
         let previous = labelChanges.previous;
         let current = labelChanges.current;
 
-        if (current.some(label => label.title == 'merge-request') && !previous.some(label => label.title == 'merge-request')) {
+        if (current.some(label => label.title == '6-merge-request') && !previous.some(label => label.title == '6-merge-request')) {
 
             setTimeout(async () => {
 
-                let issuesOnMerge = await gitlab.getIssuesByLabel('merge-request');
+                let issuesOnMerge = await gitlab.getIssuesByLabel('6-merge-request');
                 issuesOnMerge = issuesOnMerge.find(issue => issue.iid == _issueMerge.id);
                 
                 let mergeRes = await gitlab.createMergeRequest(_issueMerge);
