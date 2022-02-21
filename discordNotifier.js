@@ -55,6 +55,8 @@ async function notifyRefactoring(issue) {
     refacMsg.content = `<@&${process.env.DEV_ROLE}>`;
 
     await sendMessage(process.env.WEBHOOK, refacMsg);
+
+    console.log(`Tarefa passa para Refactoring -> ${issue.id}`);
 }
 
 
