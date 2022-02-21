@@ -1,6 +1,7 @@
 node_modules
 .env
 .env.dev
+.env.test
 issue-test.json
 mergeExample.json
 test-alreadyon-homolog.yml

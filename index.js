@@ -2,7 +2,7 @@ const expss = require('express');
 const bodyParser = require("body-parser");
 const router = expss.Router();
 const app = expss();
-const gitlab = require('./gitlabAPI_Consumer.js');
+const gitlab = require('./gitlabAPI.js');
 const discord = require('./discordNotifier.js');
 
 const port = process.env.PORT || 3000;
@@ -41,16 +41,17 @@ app.post('/gitlob/hml', (req, res) => {
         let previous = labelChanges.previous;
         let current = labelChanges.current;
 
-        if(current.some(label => label.title == process.env.LABEL_HML_CONSIG) && !previous.some(label => label.title == process.env.LABEL_HML_CONSIG)) {
+        if(current.some(label => label.title == '9-homologation') && !previous.some(label => label.title == '9-homologation')) {
            
             setTimeout(async () => {
                 
-                let issuesOnHomolog = await gitlab.getHomologIssuesOnBoard();
+                // let issuesOnHomolog = await gitlab.getHomologIssuesOnBoard();
+                let issuesOnHomolog = await gitlab.getIssuesByLabel('9-homologation');
                 issuesOnHomolog = issuesOnHomolog.find(issue => issue.iid == _issue.id);
 
                 issuesOnHomolog ? await discord.notifyNewIssueToTest(_issue) : console.log(`Vish, trupicaram com essa tarefa aq hein -> ${_issue.id}`);
 
-            }, 480000);//600000 - 480000
+            }, 3000);//600000 - 480000
         }
     }
 
@@ -90,12 +91,45 @@ app.post('/gitlob/merges', (req, res) => {
                 
                 let mergeRes = await gitlab.createMergeRequest(_issueMerge);
 
-                issuesOnMerge ? await discord.notifyNewMerge(_issueMerge, _member) : console.log(`Vish, trupicaram com essa tarefa aq hein -> ${_issue.id}`);
-                mergeRes.state == 'opened'
+                issuesOnMerge ? await discord.notifyNewMerge(_issueMerge, _member) : console.log(`Vish, trupicaram com essa tarefa aq hein -> ${_issueMerge.id}`);
     
-            }, 480000);//600000 - 
+            }, 3000);//600000 - 480000
         }
     }
 
     res.sendStatus(200);
 });
+
+app.post('/gitlob/refac', (req, res) =>{
+
+    const body = req.body;
+
+    let _issueRefac = {
+        id: body.object_attributes.iid,
+        title: body.object_attributes.title,
+        url: body.object_attributes.url
+    };
+
+    let labelChanges = body.changes.labels;
+    
+    if (labelChanges) {
+        
+        let previous = labelChanges.previous;
+        let current = labelChanges.current;
+
+        if (current.some(label => label.title == '3-Refactoring') && !previous.some(label => label.title == '3-Refactoring')) {
+
+            setTimeout(async () => {
+
+                // discord.notifyRefactoring(_issueRefac);
+                let issuesOnRefac = await gitlab.getIssuesByLabel('3-Refactoring');
+                issuesOnRefac = issuesOnRefac.find(issue => issue.iid == _issueRefac.id);
+
+                issuesOnRefac ? await discord.notifyRefactoring(_issueRefac) : console.log(`Vish, trupicaram com essa tarefa aq hein -> ${_issueRefac.id}`);
+    
+            }, 3000);//600000 - 
+        }
+    }
+
+    res.sendStatus(200);
+})
