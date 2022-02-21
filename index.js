@@ -51,7 +51,7 @@ app.post('/gitlob/hml', (req, res) => {
 
                 issuesOnHomolog ? await discord.notifyNewIssueToTest(_issue) : console.log(`Vish, trupicaram com essa tarefa aq hein -> ${_issue.id}`);
 
-            }, 3000);//600000 - 480000
+            }, 480000);//600000 - 480000
         }
     }
 
@@ -93,7 +93,7 @@ app.post('/gitlob/merges', (req, res) => {
 
                 issuesOnMerge ? await discord.notifyNewMerge(_issueMerge, _member) : console.log(`Vish, trupicaram com essa tarefa aq hein -> ${_issueMerge.id}`);
     
-            }, 3000);//600000 - 480000
+            }, 180000);//600000 - 480000
         }
     }
 
@@ -127,7 +127,7 @@ app.post('/gitlob/refac', (req, res) =>{
 
                 issuesOnRefac ? await discord.notifyRefactoring(_issueRefac) : console.log(`Vish, trupicaram com essa tarefa aq hein -> ${_issueRefac.id}`);
     
-            }, 3000);//600000 - 
+            }, 480000);//600000 - 
         }
     }
 
