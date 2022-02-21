@@ -1,57 +1,50 @@
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
-require('dotenv').config();
+require('dotenv').config({
+    path: process.env.ENV === 'dev' ? '.env.test' : '.env'
+})
 
 
-function buildEmbedMessage(issue) {
-    
-    const embedMessage = 
-    {
-        embeds: [{
-            title: `#${issue.id}`,
-            color: 13395507,
-            description: issue.title,
-            url: issue.url,
-            author: {
-              name: "Movida para Homologation"
-            },
-            thumbnail: {
-              url: "https://raw.githubusercontent.com/thiagomsantanna/gitlab-issues-notifications/master/imgs/sapo.gif"
-            }
-        }]
-    };
-    return JSON.stringify(embedMessage);
-};
+const genericEmbedMessage = (issue) => JSON.stringify({
+    embeds: [{
+        title: `#${issue.id}`,
+        description: issue.title,
+        url: issue.url
+    }]
+});
 
+
+async function sendMessage(webhook, message) {
+    await fetch(webhook, {
+        method: 'POST',
+        body: JSON.stringify(message),
+        headers: { 'Content-Type': 'application/json' }
+    });
+}
 
 async function notifyNewIssueToTest(issue) {
 
-    const _body = buildEmbedMessage(issue);
+    const hmlMsg = JSON.parse(genericEmbedMessage(issue));
+    hmlMsg.embeds[0].author = { name: 'Movida para Homologation' };
+    hmlMsg.embeds[0].color = 13395507;
+    hmlMsg.embeds[0].thumbnail = {
+        url: 'https://raw.githubusercontent.com/thiagomsantanna/gitlab-issues-notifications/master/imgs/sapo.gif'
+    };
 
-    await fetch(process.env.DSWEBHOOK_CONSIG, {
-        method: 'POST',
-        body: _body,
-        headers: { 'Content-Type': 'application/json' }
-    });
+    await sendMessage(process.env.WEBHOOK, hmlMsg);
 
-    console.log(`Notificado -> ${issue.id}`);
+    console.log(`Nova tarefa em Homologation-> ${issue.id}`);
 };
 
 async function notifyNewMerge(issue, member) {
 
-    let _body = buildEmbedMessage(issue);
-    _body = JSON.parse(_body);
-    _body.embeds[0].author.name = 'Movida para merge-request';
-    _body.embeds[0].color = 7876940;
-    _body.embeds[0].thumbnail.url = member.avatar;
-    _body = JSON.stringify(_body);
+    let mergeMsg = JSON.parse(buildEmbedMessage(issue));
+    mergeMsg.embeds[0].author = {name: 'Movida para merge-request'};
+    mergeMsg.embeds[0].color = 7876940;
+    mergeMsg.embeds[0].thumbnail = {url: member.avatar};
 
-    await fetch(process.env.WEBHOOK_MERGE, {
-        method: 'POST',
-        body: _body,
-        headers: { 'Content-Type': 'application/json' }
-    });
+    await sendMessage(process.env.WEBHOOK_MERGE, mergeMsg);
 
-    console.log(`Notificado -> ${issue.id}`);
+    console.log(`Nova tarefa em merge-request -> ${issue.id}`);
 };
 
 
