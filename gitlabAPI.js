@@ -1,10 +1,12 @@
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
-require('dotenv').config();
+require('dotenv').config({
+    path: process.env.ENV === 'dev' ? '.env.dev' : '.env'
+});
 
 
 async function getHomologIssuesOnBoard() {
 
-    const homolog = await fetch(`https://gitlab.com/api/v4/projects/${process.env.PROJECTID_CONSIG}/issues?labels=${process.env.LABEL_HML_CONSIG}&state=opened`, {
+    const homolog = await fetch(`https://gitlab.com/api/v4/projects/${process.env.PROJECTID}/issues?labels=${process.env.LABEL_HML_CONSIG}&state=opened`, {
         headers: {
             authorization: `Bearer ${process.env.TOKENGITLAB}`
         }
@@ -17,7 +19,7 @@ async function getHomologIssuesOnBoard() {
 
 async function getIssuesByLabel(label) {
     
-    const issues = await fetch(`https://gitlab.com/api/v4/projects/${process.env.PROJECTID_CONSIG}/issues?labels=${label}&state=opened`, {
+    const issues = await fetch(`https://gitlab.com/api/v4/projects/${process.env.PROJECTID}/issues?labels=${label}&state=opened`, {
         headers: {
             authorization: `Bearer ${process.env.TOKENGITLAB}`
         }
@@ -36,7 +38,7 @@ async function createMergeRequest(issue) {
         source_branch: `z-features/feature-${issue.id}`
     };
     
-    const merge_request = await fetch(`https://gitlab.com/api/v4/projects/${process.env.PROJECTID_CONSIG}//merge_requests`, {
+    const merge_request = await fetch(`https://gitlab.com/api/v4/projects/${process.env.PROJECTID}//merge_requests`, {
         method: 'POST',
         body: JSON.stringify(_body),
         headers: { 
@@ -46,6 +48,31 @@ async function createMergeRequest(issue) {
     });
     
     return await merge_request.json();
+}
+
+async function verifyWebhook(labelChanges, label){
+
+    let issuesOnBoard;
+    
+    if (labelChanges) {
+        
+        let previous = labelChanges.previous;
+        let current = labelChanges.current;
+
+        if (current.some(label => label.title == label) && !previous.some(label => label.title == label)) {
+
+            setTimeout(async () => {
+
+                issuesOnRefac = await gitlab.getIssuesByLabel(label);
+                // issuesOnRefac = issuesOnRefac.find(issue => issue.iid == _issueRefac.id);
+
+                // issuesOnRefac ? await discord.notifyRefactoring(_issueRefac) : console.log(`Vish, trupicaram com essa tarefa aq hein -> ${_issue.id}`);
+    
+            }, 480000);//600000 - 
+        }
+    }
+
+    return issuesOnBoard;
 }
 
 module.exports = { getHomologIssuesOnBoard,  getIssuesByLabel, createMergeRequest};

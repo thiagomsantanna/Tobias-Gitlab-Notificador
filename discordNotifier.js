@@ -1,6 +1,6 @@
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 require('dotenv').config({
-    path: process.env.ENV === 'dev' ? '.env.test' : '.env'
+    path: process.env.ENV === 'dev' ? '.env.dev' : '.env'
 })
 
 
@@ -37,7 +37,7 @@ async function notifyNewIssueToTest(issue) {
 
 async function notifyNewMerge(issue, member) {
 
-    let mergeMsg = JSON.parse(buildEmbedMessage(issue));
+    let mergeMsg = JSON.parse(genericEmbedMessage(issue));
     mergeMsg.embeds[0].author = {name: 'Movida para merge-request'};
     mergeMsg.embeds[0].color = 7876940;
     mergeMsg.embeds[0].thumbnail = {url: member.avatar};
@@ -47,5 +47,15 @@ async function notifyNewMerge(issue, member) {
     console.log(`Nova tarefa em merge-request -> ${issue.id}`);
 };
 
+async function notifyRefactoring(issue) {
+    let refacMsg = JSON.parse(genericEmbedMessage(issue));
+    refacMsg.embeds[0].author = {name: 'Necessário refactoring'};
+    refacMsg.embeds[0].color = 14103347;
+    refacMsg.embeds[0].thumbnail = { url: 'https://media.giphy.com/media/ZebTmyvw85gnm/giphy.gif'}
+    refacMsg.content = `<@&${process.env.DEV_ROLE}>`;
 
-module.exports = { notifyNewIssueToTest, notifyNewMerge };
+    await sendMessage(process.env.WEBHOOK, refacMsg);
+}
+
+
+module.exports = { notifyNewIssueToTest, notifyNewMerge, notifyRefactoring };
