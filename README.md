@@ -7,17 +7,17 @@ Atualmente é utilizado Node.js + Express, que utiliza da API do Gitlab para o u
 Atualmente possui 3 endpoints, que realizam:
 
 - `\gitlob\hml`: Notifica novas tarefas incluídas no boards de `9-homologation`, mostrando somente o Id da tarefa com link e seu titulo.
-  - ![image](uploads/7fec7c261ebfe3d648332901bef2b2af/image.png)
+  - ![image](https://github.com/thiagomsantanna/apiGitLabNotifier/blob/master/assets/github/homologation.png)
 
 <br>
 
 - `\gitlob\merges`: Notifica novas tarefas incluídas no boards de `8-merge-request` mostrando a foto do membro que passou a tarefa para merge, junto do Id da tarefa com link e o titulo da mesma, após isso, cria um novo merge-request da source-branch da tarefa (`z-features/feature-{id_da_tarefa}`) para a Homologation
-  - ![image](uploads/347dfb3b2b4fa6d12524c47bf7a528a6/image.png)
+  - ![image](https://github.com/thiagomsantanna/apiGitLabNotifier/blob/master/assets/github/merge.png)
 
 <br>
 
 - `\gitlob\refac`: Notifica novas tarefas passadas para `3-Refactoring`, marcando todos com o cargo de `Desenvolvedor` e mostra o Id da tarefa com link para a mesma e seu título.
-  - ![image](uploads/2ef18fb66eaa0e605f63e0a6a76cb6aa/image.png)
+  - ![image](https://github.com/thiagomsantanna/apiGitLabNotifier/blob/master/assets/github/refac.png)
 
 # DEV
 
@@ -40,6 +40,6 @@ Para a execução da API utilize do comando `npm run dev` para utilizar das vari
 
 Para o recebimento de webhooks e debug das informações, utilizo o [ngrok](https://ngrok.com/) para "tunelarmos" a instância localhost aos envios de Webhooks do Gitlab
   - Para a execução basta executar o .exe na raiz da pasta e utilizar `ngrok http {sua porta localhost, Ex: 3000}`
-    - ![image](uploads/9e3d7e48ace0e41e14a62f14ec47aff7/image.png)
+    - ![image](https://github.com/thiagomsantanna/apiGitLabNotifier/blob/master/assets/github/ngrok.png)
   - Feito isso, adicione o domínio para o uso que o ngrok dará nos Webhooks de seu projeto de teste e estará livre para desenvolver!
-   - ![image](uploads/ffa672748d6a234f2167657300b9d6c7/image.png)
+   - ![image](https://github.com/thiagomsantanna/apiGitLabNotifier/blob/master/assets/github/gitlab_webhooks.png)
